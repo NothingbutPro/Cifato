@@ -6,13 +6,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Ask_Area_Activity">
+    <android.support.v7.widget.Toolbar
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Please select your area"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        </TextView>
+
+    </android.support.v7.widget.Toolbar>
     <LinearLayout
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <android.support.v7.widget.CardView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/white"
+            android:background="@drawable/xml_button"
+            android:text="Below are the areas where Cifato is avaliable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </TextView>
+        </android.support.v7.widget.CardView>
+        </LinearLayout>
         <EditText
+            android:visibility="gone"
             android:id="@+id/city_search_edt"
             android:padding="10dp"
             android:background="@android:color/white"
@@ -22,7 +54,9 @@
             android:layout_height="wrap_content">
 
         </EditText>
+
         <Spinner
+            android:padding="10dp"
             android:id="@+id/area_spin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

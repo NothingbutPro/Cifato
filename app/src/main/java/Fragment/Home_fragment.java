@@ -2,6 +2,7 @@ package Fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -45,6 +47,7 @@ import Config.BaseURL;
 import Model.Category_model;
 import Fragment.Product_fragment;
 import cifato.foody.AppController;
+import cifato.foody.Ask_Area_Activity;
 import cifato.foody.MainActivity;
 import cifato.foody.R;
 import util.ConnectivityReceiver;
@@ -57,7 +60,7 @@ import static cifato.foody.Ask_Area_Activity.selected_area_id;
 public class Home_fragment extends Fragment {
 
     private static String TAG = Home_fragment.class.getSimpleName();
-
+    TextView change_city_btn;
     private SliderLayout imgSlider;
     private RecyclerView rv_items;
     //private RelativeLayout rl_view_all;
@@ -81,6 +84,7 @@ public class Home_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        change_city_btn = view.findViewById(R.id.change_city_btn);
         setHasOptionsMenu(true);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
@@ -89,6 +93,14 @@ public class Home_fragment extends Fragment {
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
+        change_city_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext() , Ask_Area_Activity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

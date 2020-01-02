@@ -3,9 +3,13 @@ package Adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +24,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 //import com.crowdfire.cfalertdialog.CFAlertDialog;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,10 +41,13 @@ import cifato.foody.MainActivity;
 import cifato.foody.R;
 import util.DatabaseHandler;
 
+import static android.icu.lang.UProperty.INT_START;
+
 
 public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyViewHolder>
         implements Filterable {
-
+    private CFAlertDialog alertDialog;
+//    private ColorSelectionView colorSelectionView;
     private List<Product_model> modelList;
     private List<Product_model> mFilteredList;
     private List<Decription_model> decription_models;
@@ -179,7 +189,8 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 //                mrpPrice.setText(map.get("Mrp"));
                         ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
                     }else {
-                        ShowDialogForClearCart(position);
+                        ShowDialogForClearCart(position,map,tv_contetiy,tv_total,tv_add);
+                        i=dbcart.getCartCount();
                         Toast.makeText(context, "They are not equal", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -198,22 +209,73 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         }
     }
 
-    private void ShowDialogForClearCart(int position) {
+    private void ShowDialogForClearCart(final int position, final HashMap<String, String> map, final EditText tv_contetiy, final TextView tv_total, final TextView tv_add) {
         // Create Alert using Builder
-//        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(context)
-//                .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
-//                .setTitle("You need to Change the Restaurant!")
-//                .setMessage("You already have some items from other,"+"we can not be able to add any items from "+modelList.get(position).getProduct_description())
-//                .addButton("Clear cart and add", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, (dialog, which) -> {
-//                    Toast.makeText(context, "Cart Cleared", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
-//                }).addButton("Cancel" ,-1,-1,CFAlertDialog.CFAlertActionStyle.NEGATIVE  ,CFAlertDialog.CFAlertActionAlignment.END,(dialog, which) -> {
-//                    Toast.makeText(context, "Cart retained", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
-//                });
-//
-//// Show the alert
-//        builder.show();
+//        String sourceString = "<strong>" + modelList.get(position).getTitle() + "</strong> " ;
+//        colorSelectionView = new ColorSelectionView(this);
+//        colorSelectionView.setSelectedColor(DEFAULT_BACKGROUND_COLOR);
+        alertDialog = new CFAlertDialog.Builder(context)
+                .setCancelable(true)
+                .setTitle("We Are unable to add items in cart")
+                .setMessage("Sorry,but you already have some items from others so we are unable to add from "+modelList.get(position).getTitle())
+                .addButton("Clear Card and Add",-1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    //Adding to cart now
+                        dbcart.clearCart();
+                        if (!tv_contetiy.getText().toString().equalsIgnoreCase("0")) {
+                            Toast.makeText(context, "They are equal", Toast.LENGTH_SHORT).show();
+                            map.put("product_id", modelList.get(position).getProduct_id());
+                            map.put("category_id", modelList.get(position).getCategory_id());
+                            map.put("product_image", modelList.get(position).getProduct_image());
+                            map.put("increament", modelList.get(position).getIncreament());
+                            map.put("product_name", modelList.get(position).getProduct_name());
+                            map.put("price", modelList.get(position).getPrice());
+                            map.put("stock", modelList.get(position).getIn_stock());
+                            map.put("title", modelList.get(position).getTitle());
+                            map.put("unit", modelList.get(position).getUnit());
+                            map.put("Mrp", modelList.get(position).getMrp());
+                            map.put("unit_value", modelList.get(position).getUnit_value());
+                            if (dbcart.isInCart(map.get("product_id"))) {
+                                dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+                                tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                            } else {
+                                dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+                                tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                            }
+                        } else {
+                            dbcart.removeItemFromCart(map.get("product_id"));
+//                    tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
+                            tv_add.setText("Add To Card");
+                        }
+
+                        Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+                        Double price = Double.parseDouble(map.get("price"));
+
+                        tv_total.setText("" + price * items);
+//                mrpPrice.setText(map.get("Mrp"));
+                        ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
+                        // dismiss the dialog
+                        alertDialog.dismiss();
+                    }
+                }).addButton("Cancel", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                })
+                .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
+                .onDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+
+                        // Update the color preview
+//                        setSelectedBackgroundColor(colorSelectionView.selectedColor);
+                    }
+                })
+                .create();
+
+        alertDialog.show();
     }
 
     public Product_adapter(Context context, List<Product_model> modelList, List<Decription_model> decription_models) {
@@ -393,6 +455,8 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
                     {
                         Toast.makeText(context, "they are "+modelList.get(position).getCategory_id(), Toast.LENGTH_SHORT).show();
                     }else {
+//                        ghgh
+//                        ShowDialogForClearCart(position);
                         Toast.makeText(context, "they are not "+modelList.get(position).getCategory_id(), Toast.LENGTH_SHORT).show();
                     }
                 }

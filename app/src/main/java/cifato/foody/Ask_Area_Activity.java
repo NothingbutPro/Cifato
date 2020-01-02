@@ -81,9 +81,10 @@ public class Ask_Area_Activity extends AppCompatActivity {
 
                         category_modelList = gson.fromJson(response.getString("data"), listType);
                         ArrayList<String> spinnerarraylist = new ArrayList<>();
+                        spinnerarraylist.add("Select Area");
                         for(int i=0;i<category_modelList.size();i++)
                         {
-                            spinnerarraylist.add(category_modelList.get(i).getArea());
+                            spinnerarraylist.add(i+1 , category_modelList.get(i).getArea());
                         }
                         //Creating the ArrayAdapter instance having the country list
                         ArrayAdapter aa = new ArrayAdapter(Ask_Area_Activity.this,android.R.layout.simple_spinner_item,spinnerarraylist);
@@ -94,10 +95,13 @@ public class Ask_Area_Activity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Log.e("Selected" , "location id"+selected_area_id);
-
-                                Intent intent  =new Intent(Ask_Area_Activity.this , MainActivity.class);
-                                selected_area_id =  category_modelList.get(area_spin.getSelectedItemPosition()).getId();
-                                startActivity(intent);
+                                if(area_spin.getSelectedItemPosition() !=0) {
+                                    Intent intent = new Intent(Ask_Area_Activity.this, MainActivity.class);
+                                    selected_area_id = category_modelList.get(area_spin.getSelectedItemPosition()-1).getId();
+                                    startActivity(intent);
+                                }else {
+                                    Toast.makeText(Ask_Area_Activity.this, "Please select Area", Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
@@ -124,5 +128,14 @@ public class Ask_Area_Activity extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent  =new Intent(this , MainActivity.class);
+        startActivity(intent);
+        finish();
+        super.onBackPressed();
     }
 }

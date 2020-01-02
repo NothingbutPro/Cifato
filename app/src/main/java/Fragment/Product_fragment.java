@@ -309,7 +309,7 @@ public class Product_fragment extends Fragment {
                             Rating = model.getRatting();
                             Log.e("IMAGESSS", img);
                         }
-                        Glide.with(getActivity())
+                        Glide.with(getActivity().getApplicationContext())
                                 .load(BaseURL.IMG_CATEGORY_URL + img)
                                 .listener(new RequestListener<String, GlideDrawable>() {
                                     @Override
@@ -444,7 +444,7 @@ public class Product_fragment extends Fragment {
         MenuItem search = menu.findItem(R.id.action_search);
         search.setVisible(true);
         MenuItem check = menu.findItem(R.id.action_change_password);
-        check.setVisible(false);
+        check.setVisible(true);
     }
 
     @Override
