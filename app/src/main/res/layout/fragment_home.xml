@@ -59,7 +59,6 @@
                 <View
                     android:layout_width="4dp"
                     android:layout_height="match_parent">
-
                 </View>
                 <TextView
                     android:layout_margin="4dp"
