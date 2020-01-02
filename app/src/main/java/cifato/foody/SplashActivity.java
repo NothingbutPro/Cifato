@@ -169,11 +169,11 @@ public class SplashActivity extends AppCompatActivity {
 
         if (sessionManagement.isLoggedIn()) {
 //               sessionManagement.checkLogin();
-            Intent startmain = new Intent(SplashActivity.this, MainActivity.class);
+            Intent startmain = new Intent(SplashActivity.this, Ask_Area_Activity.class);
             startActivity(startmain);
             finish();
         } else {
-            Intent startmain = new Intent(SplashActivity.this, MainActivity.class);
+            Intent startmain = new Intent(SplashActivity.this, Ask_Area_Activity.class);
             startActivity(startmain);
             finish();
         }

@@ -51,6 +51,7 @@ import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
 
+import static cifato.foody.Ask_Area_Activity.selected_area_id;
 
 
 public class Home_fragment extends Fragment {
@@ -231,6 +232,10 @@ public class Home_fragment extends Fragment {
         Map<String, String> params = new HashMap<String, String>();
         if (parent_id != null && parent_id != "") {
             params.put("parent", parent_id);
+            isSubcat = true;
+        }else {
+            params.put("parent", parent_id);
+            params.put("location_id", selected_area_id);
             isSubcat = true;
         }
 

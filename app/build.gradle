@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
 /*    implementation 'com.google.firebase:firebase-core:16.0.0'*/
     implementation 'com.android.support:multidex:1.0.0'
+    implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
 
 }
 // ADD THIS AT THE BOTTOM

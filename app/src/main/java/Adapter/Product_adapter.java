@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+//import com.crowdfire.cfalertdialog.CFAlertDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,40 +101,89 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             } else if (id == R.id.tv_subcat_add) {
 
                 HashMap<String, String> map = new HashMap<>();
+//                HashMap<String, String> maps =new HashMap<>();
+                if (dbcart.getCartCount() == 0)
+                {
 
-                map.put("product_id", modelList.get(position).getProduct_id());
-                map.put("category_id", modelList.get(position).getCategory_id());
-                map.put("product_image", modelList.get(position).getProduct_image());
-                map.put("increament", modelList.get(position).getIncreament());
-                map.put("product_name", modelList.get(position).getProduct_name());
-                map.put("price", modelList.get(position).getPrice());
-                map.put("stock", modelList.get(position).getIn_stock());
-                map.put("title", modelList.get(position).getTitle());
-                map.put("unit", modelList.get(position).getUnit());
-                map.put("Mrp", modelList.get(position).getMrp());
-                map.put("unit_value", modelList.get(position).getUnit_value());
+                    Toast.makeText(context, "They are equal", Toast.LENGTH_SHORT).show();
+                    map.put("product_id", modelList.get(position).getProduct_id());
+                    map.put("category_id", modelList.get(position).getCategory_id());
+                    map.put("product_image", modelList.get(position).getProduct_image());
+                    map.put("increament", modelList.get(position).getIncreament());
+                    map.put("product_name", modelList.get(position).getProduct_name());
+                    map.put("price", modelList.get(position).getPrice());
+                    map.put("stock", modelList.get(position).getIn_stock());
+                    map.put("title", modelList.get(position).getTitle());
+                    map.put("unit", modelList.get(position).getUnit());
+                    map.put("Mrp", modelList.get(position).getMrp());
+                    map.put("unit_value", modelList.get(position).getUnit_value());
 
-                if (!tv_contetiy.getText().toString().equalsIgnoreCase("0")) {
+                    if (!tv_contetiy.getText().toString().equalsIgnoreCase("0")) {
 
-                    if (dbcart.isInCart(map.get("product_id"))) {
-                        dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
-                        tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                        if (dbcart.isInCart(map.get("product_id"))) {
+                            dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+                            tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                        } else {
+                            dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+                            tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                        }
                     } else {
-                        dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
-                        tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
-                    }
-                } else {
-                    dbcart.removeItemFromCart(map.get("product_id"));
+                        dbcart.removeItemFromCart(map.get("product_id"));
 //                    tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
-                    tv_add.setText("Add To Card");
+                        tv_add.setText("Add To Card");
+                    }
+
+                    Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+                    Double price = Double.parseDouble(map.get("price"));
+
+                    tv_total.setText("" + price * items);
+//                mrpPrice.setText(map.get("Mrp"));
+                    ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
+
+                }
+                for(int i=0;i<dbcart.getCartCount(); i++) {
+                    if(dbcart.getCartAll().get(i).get("category_id").equals(modelList.get(position).getCategory_id()))
+                    {
+                        Toast.makeText(context, "They are equal", Toast.LENGTH_SHORT).show();
+                        map.put("product_id", modelList.get(position).getProduct_id());
+                        map.put("category_id", modelList.get(position).getCategory_id());
+                        map.put("product_image", modelList.get(position).getProduct_image());
+                        map.put("increament", modelList.get(position).getIncreament());
+                        map.put("product_name", modelList.get(position).getProduct_name());
+                        map.put("price", modelList.get(position).getPrice());
+                        map.put("stock", modelList.get(position).getIn_stock());
+                        map.put("title", modelList.get(position).getTitle());
+                        map.put("unit", modelList.get(position).getUnit());
+                        map.put("Mrp", modelList.get(position).getMrp());
+                        map.put("unit_value", modelList.get(position).getUnit_value());
+
+                        if (!tv_contetiy.getText().toString().equalsIgnoreCase("0")) {
+
+                            if (dbcart.isInCart(map.get("product_id"))) {
+                                dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+                                tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                            } else {
+                                dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+                                tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+                            }
+                        } else {
+                            dbcart.removeItemFromCart(map.get("product_id"));
+//                    tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
+                            tv_add.setText("Add To Card");
+                        }
+
+                        Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+                        Double price = Double.parseDouble(map.get("price"));
+
+                        tv_total.setText("" + price * items);
+//                mrpPrice.setText(map.get("Mrp"));
+                        ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
+                    }else {
+                        ShowDialogForClearCart(position);
+                        Toast.makeText(context, "They are not equal", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
-                Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
-                Double price = Double.parseDouble(map.get("price"));
-
-                tv_total.setText("" + price * items);
-//                mrpPrice.setText(map.get("Mrp"));
-                ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
 
             } else if (id == R.id.iv_subcat_img) {
                 showImage(modelList.get(position).getProduct_image());
@@ -146,6 +196,24 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
             }*/
 
         }
+    }
+
+    private void ShowDialogForClearCart(int position) {
+        // Create Alert using Builder
+//        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(context)
+//                .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
+//                .setTitle("You need to Change the Restaurant!")
+//                .setMessage("You already have some items from other,"+"we can not be able to add any items from "+modelList.get(position).getProduct_description())
+//                .addButton("Clear cart and add", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, (dialog, which) -> {
+//                    Toast.makeText(context, "Cart Cleared", Toast.LENGTH_SHORT).show();
+//                    dialog.dismiss();
+//                }).addButton("Cancel" ,-1,-1,CFAlertDialog.CFAlertActionStyle.NEGATIVE  ,CFAlertDialog.CFAlertActionAlignment.END,(dialog, which) -> {
+//                    Toast.makeText(context, "Cart retained", Toast.LENGTH_SHORT).show();
+//                    dialog.dismiss();
+//                });
+//
+//// Show the alert
+//        builder.show();
     }
 
     public Product_adapter(Context context, List<Product_model> modelList, List<Decription_model> decription_models) {
@@ -319,7 +387,15 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                for(int i=0;i<dbcart.getCartCount();i++) {
+                    HashMap<String, String> maps = dbcart.getCartAll().get(i);
+                    if (maps.get("category_id").equals(modelList.get(position).getCategory_id()))
+                    {
+                        Toast.makeText(context, "they are "+modelList.get(position).getCategory_id(), Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(context, "they are not "+modelList.get(position).getCategory_id(), Toast.LENGTH_SHORT).show();
+                    }
+                }
                 HashMap<String, String> map = new HashMap<>();
 
                 map.put("product_id", modelList.get(position).getProduct_id());
