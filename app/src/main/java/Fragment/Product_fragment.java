@@ -444,7 +444,7 @@ public class Product_fragment extends Fragment {
         MenuItem search = menu.findItem(R.id.action_search);
         search.setVisible(true);
         MenuItem check = menu.findItem(R.id.action_change_password);
-        check.setVisible(true);
+        check.setVisible(false);
     }
 
     @Override

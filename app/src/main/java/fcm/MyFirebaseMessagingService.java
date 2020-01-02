@@ -160,7 +160,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notification = new Notification.Builder(this)
                     .setContentTitle(message)
                     .setContentText(title)
-                    .setSmallIcon(R.drawable.ic_logo_2)
+                    .setSmallIcon(R.drawable.cifatotrain)
                     .setLargeIcon(bitmap)
                     .setStyle(new Notification.BigPictureStyle()
                             .bigPicture(bitmap))

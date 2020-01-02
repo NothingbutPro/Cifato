@@ -13,14 +13,16 @@
         android:layout_height="wrap_content" >
 
         <RadioButton
+            android:visibility="gone"
             android:id="@+id/radioTrain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Train"
             android:buttonTint="@color/colorPrimary"
-            android:checked="true" />
+            />
 
         <RadioButton
+            android:checked="true"
             android:id="@+id/radioAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

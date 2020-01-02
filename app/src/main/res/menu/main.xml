@@ -26,6 +26,7 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:visible="false"
         android:id="@+id/action_change_password"
         android:icon="@drawable/ic_change_password"
         android:title="@string/change_password"

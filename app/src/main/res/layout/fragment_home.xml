@@ -47,12 +47,12 @@
             <TextView
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@color/colorPrimary"
+
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_home_cat"
-                android:textColor="@color/colorAccent"
+                android:textColor="#000"
                 android:textSize="@dimen/space_18"
                 android:padding="@dimen/space_6"
             />

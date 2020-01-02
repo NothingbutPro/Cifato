@@ -90,7 +90,7 @@ public class Delivery_fragment extends Fragment implements View.OnClickListener{
     private int mYear, mMonth, mDay, mHour, mMinute;
 
     private String gettime = "";
-    private String getdate = "";
+    private String getdate = "02/01/2020";
 
     private String deli_charges;
     private String getlocation_id;
@@ -362,10 +362,7 @@ public class Delivery_fragment extends Fragment implements View.OnClickListener{
 
         boolean cancel = false;
 
-        if (TextUtils.isEmpty(getdate)) {
-            Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
-            cancel = true;
-        } else if (TextUtils.isEmpty(gettime)) {
+        if (TextUtils.isEmpty(gettime)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.please_select_date_time), Toast.LENGTH_SHORT).show();
             cancel = true;
         }

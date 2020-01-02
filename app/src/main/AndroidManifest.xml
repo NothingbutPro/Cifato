@@ -17,9 +17,9 @@
         android:networkSecurityConfig="@xml/security_config"
         android:name=".AppController"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/cifatotrain"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/cifatotrain"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- <meta-data android:name="android.support.multidex.MultiDexApplication" android:value="true"/>-->

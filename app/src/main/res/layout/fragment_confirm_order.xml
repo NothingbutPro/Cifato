@@ -103,7 +103,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/gray"
                                 android:padding="@dimen/space_4"
-                                android:text="Delivery Train Detail"
+                                android:text="Delivery  Detail"
                                 android:textSize="@dimen/space_18" />
 
                             <TextView

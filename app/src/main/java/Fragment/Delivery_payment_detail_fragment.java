@@ -108,7 +108,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
         String addrtype = getArguments().getString("addrtype");
         strId = getArguments().getString("id");
 
-        tv_timeslot.setText(getdate + " " + gettime);
+        tv_timeslot.setText(" " + gettime);
 
         if (addrtype.equals("Home")) {
             tv_address.setText("Name : " + getuser_name + "\n" + "Mobile No.: " + Guestmobile + "\n" + getaddress);

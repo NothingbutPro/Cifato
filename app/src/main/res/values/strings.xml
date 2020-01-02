@@ -56,13 +56,13 @@
     <string name="tv_cart_rs">\u0020Rs</string>
 
     <!-- fragment_delivery_time.xml -->
-    <string name="tv_del_title">Delivery Date/Time</string>
+    <string name="tv_del_title">Delivery Time/Address</string>
     <string name="tv_del_address">Delivery Address</string>
     <string name="et_del_address_hint">Enter Delivery address..</string>
     <string name="tv_del_continue">Continue With Time</string>
     <string name="tv_del_date">Select delivery date</string>
     <string name="tv_del_time">Select delivery time</string>
-    <string name="tv_del_date_time">Delivery Data/Time</string>
+    <string name="tv_del_date_time">Delivery Time</string>
     <string name="tv_total_item_amount">Total Items And Amount</string>
     <string name="tv_total_total">Total Amount </string>
 
@@ -117,8 +117,8 @@ information.</string>
     <string name="phone_too_short">Phone Too short</string>
     <string name="phone_tooshort">Mobile Number Should Be 10 Digits</string>
     <string name="please_add_address">Please add address</string>
-    <string name="please_select_address">Please select train details</string>
-    <string name="please_select_date_time">Please select date and time</string>
+    <string name="please_select_address">Please select address</string>
+    <string name="please_select_date_time">Please select time</string>
     <string name="profile_updated">Profile updated</string>
     <string name="uploading_profile_data">Uploading profile data</string>
     <string name="cancle_order_note">Are you sure!\nyou want to cancle order ?</string>

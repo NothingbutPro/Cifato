@@ -1,5 +1,6 @@
 package cifato.foody;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -61,7 +62,10 @@ public class Ask_Area_Activity extends AppCompatActivity {
         // Tag used to cancel the request
         String tag_json_obj = "json_category_req";
 
-
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Processing ,Please wait");
+        progressDialog.setCancelable(true);
+        progressDialog.show();
         Map<String, String> params = new HashMap<String, String>();
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
@@ -109,7 +113,7 @@ public class Ask_Area_Activity extends AppCompatActivity {
 
                             }
                         });
-
+                        progressDialog.dismiss();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -120,7 +124,9 @@ public class Ask_Area_Activity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Ask_Tag", "Error: " + error.getMessage());
+
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    progressDialog.dismiss();
                     Toast.makeText(Ask_Area_Activity.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
                 }
             }

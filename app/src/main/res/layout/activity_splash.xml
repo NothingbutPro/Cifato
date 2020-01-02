@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="#FFDE79"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="@dimen/space_10"
@@ -39,7 +39,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/cifatologo12" />
+        app:srcCompat="@drawable/cifatotrain" />
 
     <TextView
         android:visibility="gone"
