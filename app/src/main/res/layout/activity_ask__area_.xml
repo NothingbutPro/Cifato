@@ -6,7 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Ask_Area_Activity">
+    <ImageView
+
+        android:scaleType="fitXY"
+        android:background="@drawable/ask_cofee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ImageView>
+    <ImageView
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/main_ask_li"
+        android:src="@drawable/ask_location_pin"
+        android:layout_width="50dp"
+        android:layout_height="60dp">
+
+    </ImageView>
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolex"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,50 +37,59 @@
         </TextView>
 
     </android.support.v7.widget.Toolbar>
+
     <LinearLayout
-        android:layout_centerVertical="true"
+
+        android:id="@+id/main_ask_li"
+        android:background="@android:color/transparent"
+        android:layout_below="@id/toolex"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
-
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <android.support.v7.widget.CardView
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
         <TextView
-            android:textColor="@color/white"
-            android:background="@drawable/xml_button"
+            android:visibility="gone"
+            android:textColor="#000"
             android:text="Below are the areas where Cifato is avaliable"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
 
         </TextView>
-        </android.support.v7.widget.CardView>
+
         </LinearLayout>
+
         <EditText
             android:visibility="gone"
             android:id="@+id/city_search_edt"
             android:padding="10dp"
             android:background="@android:color/white"
             android:layout_margin="5dp"
-            android:hint="Search City"
+            android:hint="Search Area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </EditText>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <Spinner
+            android:layout_marginBottom="20dp"
+
             android:padding="10dp"
             android:id="@+id/area_spin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </Spinner>
-
         <Button
             android:id="@+id/selec_area_btn"
             android:textColor="@color/white"
@@ -74,5 +101,4 @@
 
         </Button>
     </LinearLayout>
-
 </RelativeLayout>

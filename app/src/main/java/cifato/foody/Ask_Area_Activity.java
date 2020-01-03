@@ -19,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -32,12 +34,14 @@ import java.util.List;
 import java.util.Map;
 
 import Model.City_Data_Datas;
+import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 
 public class Ask_Area_Activity extends AppCompatActivity {
     Spinner area_spin;
     EditText city_search_edt;
     Button selec_area_btn;
+    private SliderLayout ask_img_slider;
     ArrayList<City_Data_Datas>category_modelList  = new ArrayList<>();
     public static String selected_area_id;
     @Override
@@ -47,14 +51,40 @@ public class Ask_Area_Activity extends AppCompatActivity {
         area_spin = findViewById(R.id.area_spin);
         city_search_edt = findViewById(R.id.city_search_edt);
         selec_area_btn = findViewById(R.id.selec_area_btn);
+//        ask_img_slider = findViewById(R.id.ask_img_slider);
+        // initialize a SliderLayout
+//        ask_img_slider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+//        ask_img_slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+//        ask_img_slider.setCustomAnimation(new DescriptionAnimation());
+//        ask_img_slider.setDuration(4000);
+        // check internet connection
+        city_search_edt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                area_spin.performClick();
+            }
+        });
+        if (ConnectivityReceiver.isConnected()) {
+            makeGetSliderRequest();
+//            makeGetCategoryRequest("");
+        }
         getallmyCities();
-        selec_area_btn.setVisibility(View.GONE);
-//        selec_area_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+//        selec_area_btn.setVisibility(View.GONE);
+        selec_area_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(area_spin.getSelectedItemPosition() !=0) {
+                    Intent intent = new Intent(Ask_Area_Activity.this, MainActivity.class);
+                    selected_area_id = category_modelList.get(area_spin.getSelectedItemPosition()-1).getId();
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(Ask_Area_Activity.this, "Please select Area", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void makeGetSliderRequest() {
     }
 
     private void getallmyCities() {
@@ -99,13 +129,13 @@ public class Ask_Area_Activity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Log.e("Selected" , "location id"+selected_area_id);
-                                if(area_spin.getSelectedItemPosition() !=0) {
-                                    Intent intent = new Intent(Ask_Area_Activity.this, MainActivity.class);
-                                    selected_area_id = category_modelList.get(area_spin.getSelectedItemPosition()-1).getId();
-                                    startActivity(intent);
-                                }else {
-                                    Toast.makeText(Ask_Area_Activity.this, "Please select Area", Toast.LENGTH_SHORT).show();
-                                }
+//                                if(area_spin.getSelectedItemPosition() !=0) {
+//                                    Intent intent = new Intent(Ask_Area_Activity.this, MainActivity.class);
+//                                    selected_area_id = category_modelList.get(area_spin.getSelectedItemPosition()-1).getId();
+//                                    startActivity(intent);
+//                                }else {
+//                                    Toast.makeText(Ask_Area_Activity.this, "Please select Area", Toast.LENGTH_SHORT).show();
+//                                }
                             }
 
                             @Override
